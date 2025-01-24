@@ -5,10 +5,12 @@
   height: 30rem;
   padding: 0 160px;
   margin: 85px 0;
+  color: white;
 }
 
+
 .collectionLeft {
-  background-image: url("../../../Assets/Collection/collection1.jpg");
+  background-image: url("../../../Assets/Collection/women-collection.jpg");
   background-size: cover;
   background-position: center center;
   padding: 30px;

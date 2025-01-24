@@ -31,7 +31,7 @@
 
 .filterColorBtn button {
   background-color: white;
-  border-radius: 50%;
+  border-radius: 0%;
   padding: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -45,7 +45,7 @@
   position: absolute;
   box-sizing: border-box;
   border: 2px solid black;
-  border-radius: 50%;
+  border-radius: 0%;
   width: calc(100% + 12px);
   height: calc(100% + 12px);
   left: -6px;

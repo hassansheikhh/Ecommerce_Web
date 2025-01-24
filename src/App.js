@@ -8,6 +8,10 @@ import About from "../src/Pages/About";
 import Shop from "../src/Pages/Shop";
 import Contact from "../src/Pages/Contact";
 import Blog from "../src/Pages/Blog";
+import Dashboard from '../src/Pages/Dashboard'
+import OrdersPage from '../src/Pages/OrderPage'
+// import Dashboard from "./Pages/Dashboard"; // Import Dashboard
+
 import Header from "../src/Components/Header/Navbar";
 import Footer from "../src/Components/Footer/Footer";
 import ProductDetails from "./Pages/ProductDetails";
@@ -20,6 +24,9 @@ import TermsConditions from "./Pages/TermsConditions";
 import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import Popup from "./Components/PopupBanner/Popup";
 import { Toaster } from "react-hot-toast";
+import AddProduct from "./Pages/AddProduct";
+import Products from "./Pages/Products";
+import Product from "./Components/Product/ProductMain/Product";
 
 const App = () => {
   return (
@@ -33,8 +40,11 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/product" element={<ProductDetails />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product" element={<Product />} />
           <Route path="/loginSignUp" element={<Authentication />} />
           <Route path="/resetPassword" element={<ResetPass />} />
           <Route path="/BlogDetails" element={<BlogDetails />} />

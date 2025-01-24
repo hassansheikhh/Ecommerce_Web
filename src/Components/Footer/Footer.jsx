@@ -34,11 +34,11 @@ const Footer = () => {
               <img src={logo} alt="" Z />
             </div>
 
-            <p>1418 River Drive, Suite 35 Cottonhall, CA 9622 United States</p>
+            <p>Korangi Industrial Area, Karachi, Pakistan</p>
 
             <div className="footer_address">
               <strong> sale@uomo.com </strong>
-              <strong> +1 246-345-0695 </strong>
+              <strong> +92 310-2382431 </strong>
             </div>
 
             <div className="social_links">
@@ -138,7 +138,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer_bottom">
-          <p>
+          {/* <p>
             © {getCurrentYear()} Uomo. All Rights Reserved | Made By{" "}
             <a
               href="https://github.com/shakti177"
@@ -149,7 +149,7 @@ const Footer = () => {
               Shakti Tamrakar
             </a>{" "}
             with ❤️
-          </p>
+          </p> */}
           <div className="footerLangCurrency">
             <div className="footerLang">
               <p>Language</p>

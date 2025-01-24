@@ -15,7 +15,7 @@ const Filter = () => {
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [brandsData] = useState([
-    { name: "Adidas", count: 2 },
+    { name: "Borjan", count: 2 },
     { name: "Balmain", count: 7 },
     { name: "Balenciaga", count: 10 },
     { name: "Burberry", count: 39 },
@@ -49,16 +49,9 @@ const Filter = () => {
   );
 
   const filterCategories = [
-    "Dresses",
-    "Shorts",
-    "Sweatshirts",
-    "Swimwear",
-    "Jackets",
-    "T-Shirts & Tops",
-    "Jeans",
-    "Trousers",
-    "Men",
-    "Jumpers & Cardigans",
+    "Mens",
+    "Womens",
+    "Kids",
   ];
 
   const filterColors = [
@@ -74,7 +67,7 @@ const Filter = () => {
     "#BFDCC4",
   ];
 
-  const filterSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+  const filterSizes = ["39", "40", "41", "42", "43", "44"];
 
   return (
     <div>
@@ -109,18 +102,29 @@ const Filter = () => {
             <AccordionDetails sx={{ padding: 0 }}>
               {
                 <div className="filterColorBtn">
-                  {filterColors.map((color, index) => (
-                    <button
-                      key={index}
-                      className={`colorButton ${
-                        selectedColors.includes(color) ? "selected" : ""
-                      }`}
-                      style={{
-                        backgroundColor: color,
-                      }}
-                      onClick={() => handleColorChange(color)}
-                    />
-                  ))}
+
+                  <button
+                    onClick={() => handleColorChange()}
+                  >Black </button>
+                  <button
+                    onClick={() => handleColorChange()}
+                  >Brown </button>
+                  <button
+                    onClick={() => handleColorChange()}
+                  >Mustard </button>
+                  <button
+                    onClick={() => handleColorChange()}
+                  >White </button>
+                  <button
+                    onClick={() => handleColorChange()}
+                  >Blue</button>
+                  <button
+                    onClick={() => handleColorChange()}
+                  >Olive</button>
+                  <button
+                    onClick={() => handleColorChange()}
+                  >Camel</button>
+
                 </div>
               }
             </AccordionDetails>
@@ -141,9 +145,8 @@ const Filter = () => {
                 {filterSizes.map((size, index) => (
                   <button
                     key={index}
-                    className={`sizeButton ${
-                      selectedSizes.includes(size) ? "selected" : ""
-                    }`}
+                    className={`sizeButton ${selectedSizes.includes(size) ? "selected" : ""
+                      }`}
                     onClick={() => handleSizeChange(size)}
                   >
                     {size}
@@ -153,7 +156,7 @@ const Filter = () => {
             </AccordionDetails>
           </Accordion>
         </div>
-        <div className="filterBrands">
+        {/* <div className="filterBrands">
           <Accordion defaultExpanded disableGutters elevation={0}>
             <AccordionSummary
               expandIcon={<IoIosArrowDown size={20} />}
@@ -164,7 +167,6 @@ const Filter = () => {
               <h5 className="filterHeading">Brands</h5>
             </AccordionSummary>
             <AccordionDetails sx={{ padding: 0 }}>
-              {/* Search bar */}
               <div className="searchBar">
                 <BiSearch className="searchIcon" size={20} color={"#767676"} />
                 <input
@@ -174,24 +176,19 @@ const Filter = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-
-              {/* Brand list */}
               <div className="brandList">
                 {filteredBrands.length > 0 ? (
                   filteredBrands.map((brand, index) => (
                     <div className="brandItem" key={index}>
-                      {/* Radio button */}
                       <input
                         type="checkbox"
                         name="brand"
                         id={`brand-${index}`}
                         className="brandRadio"
                       />
-                      {/* Brand name */}
                       <label htmlFor={`brand-${index}`} className="brandLabel">
                         {brand.name}
                       </label>
-                      {/* Brand count */}
                       <span className="brandCount">{brand.count}</span>
                     </div>
                   ))
@@ -201,8 +198,8 @@ const Filter = () => {
               </div>
             </AccordionDetails>
           </Accordion>
-        </div>
-        <div className="filterPrice">
+        </div> */}
+        {/* <div className="filterPrice">
           <Accordion defaultExpanded disableGutters elevation={0}>
             <AccordionSummary
               expandIcon={<IoIosArrowDown size={20} />}
@@ -242,7 +239,7 @@ const Filter = () => {
               </div>
             </AccordionDetails>
           </Accordion>
-        </div>
+        </div> */}
       </div>
     </div>
   );

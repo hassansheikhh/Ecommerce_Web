@@ -27,6 +27,7 @@ const Navbar = () => {
   const cart = useSelector((state) => state.cart);
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -63,11 +64,6 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/blog" onClick={scrollToTop}>
-                  BLOG
-                </Link>
-              </li>
-              <li>
                 <Link to="/about" onClick={scrollToTop}>
                   ABOUT
                 </Link>
@@ -75,6 +71,11 @@ const Navbar = () => {
               <li>
                 <Link to="/contact" onClick={scrollToTop}>
                   CONTACT
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard" onClick={scrollToTop}>
+                  DASHBOARD
                 </Link>
               </li>
             </ul>
