@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginSignUp.css";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const LoginSignUp = () => {
+  const notify = () => toast(message);
   const [activeTab, setActiveTab] = useState("tabButton1");
+  const [message, setMessage] = useState("");
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
   });
 
+  useEffect(() => {
+    if (message) {
+      notify(message);
+    } 
+  }, [message]);
   const handleTab = (tab) => {
     setActiveTab(tab);
   };
@@ -21,28 +30,29 @@ const LoginSignUp = () => {
     });
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent page reload
+  const HandleLogin = async (e) => {
+    e.preventDefault();
 
     try {
-      const response = await fetch("http://192.168.16.12:8099/api/user/Login", {
+      const response = await fetch("https://localhost:44365/api/user/Login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: loginData.username,
-          password: loginData.password,
+          UserName: loginData.username,
+          Password: loginData.password,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log("Login Successful", data);
-        // Handle successful login, e.g., redirect or save user info
+        setMessage(data.Message)
+        localStorage.setItem("UserInfo", JSON.stringify(response.Data));
       } else {
         console.error("Login Failed", response.status);
-        // Handle login error
+        setMessage(response.Message)
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -52,6 +62,9 @@ const LoginSignUp = () => {
   return (
     <>
       <div className="loginSignUpSection">
+        <div>
+          <ToastContainer />
+        </div>
         <div className="loginSignUpContainer">
           <div className="loginSignUpTabs">
             <p
@@ -71,7 +84,7 @@ const LoginSignUp = () => {
             {/* Login Tab */}
             {activeTab === "tabButton1" && (
               <div className="loginSignUpTabsContentLogin">
-                <form onSubmit={handleLogin}>
+                <form onSubmit={HandleLogin}>
                   <input
                     type="text"
                     placeholder="Username *"
@@ -97,7 +110,7 @@ const LoginSignUp = () => {
                       <Link to="/resetPassword">Lost password?</Link>
                     </p>
                   </div>
-                  <button onClick={handleLogin}>Log In</button>
+                  <button onClick={HandleLogin}>Log In</button>
                 </form>
                 <div className="loginSignUpTabsContentLoginText">
                   <p>
