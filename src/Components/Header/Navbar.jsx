@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 
 import { useSelector } from "react-redux";
@@ -28,6 +28,14 @@ const Navbar = () => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  // Fetch UserInfo from sessionStorage
+  useEffect(() => {
+    const userInfo = JSON.parse(sessionStorage.getItem("UserInfo"));
+    if (userInfo && userInfo.UserId === 7) {
+      setIsAdmin(true);
+    }
+  }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -73,11 +81,14 @@ const Navbar = () => {
                   CONTACT
                 </Link>
               </li>
-              <li>
-                <Link to="/dashboard" onClick={scrollToTop}>
-                  DASHBOARD
-                </Link>
-              </li>
+              {/* Conditionally render the Dashboard link */}
+              {isAdmin && (
+                <li>
+                  <Link to="/dashboard" onClick={scrollToTop}>
+                    DASHBOARD
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -99,7 +110,6 @@ const Navbar = () => {
             </Badge>
           </Link>
           <FiHeart size={22} onClick={scrollToTop} />
-          {/* <RiMenu2Line size={22} /> */}
         </div>
       </nav>
 
@@ -166,6 +176,14 @@ const Navbar = () => {
                     CONTACT
                   </Link>
                 </li>
+                {/* Conditionally render the Dashboard link */}
+                {isAdmin && (
+                  <li>
+                    <Link to="/dashboard" onClick={toggleMobileMenu}>
+                      DASHBOARD
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

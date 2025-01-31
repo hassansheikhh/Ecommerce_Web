@@ -15,9 +15,9 @@ const Home = () => {
       <CollectionBox />
       <Trendy />
       <DealTimer />
-      <Banner />
+      {/* <Banner /> */}
       <LimitedEdition />
-      <Instagram />
+      {/* <Instagram /> */}
       <Services />
     </>
   );

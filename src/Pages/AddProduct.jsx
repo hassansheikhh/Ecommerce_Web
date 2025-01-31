@@ -1,19 +1,36 @@
-import React, { useState } from "react";
-import { Box, Grid, Typography, Card, CardContent, TextField, Button, MenuItem, Select, InputLabel, FormControl, Input } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Grid, Typography, Card, CardContent, TextField, Button, MenuItem, Select, InputLabel, FormControl, Input, TextareaAutosize } from "@mui/material";
 import Menu from "../Components/SideBar/SideBar";
 
 const AddProduct = () => {
-    const [productDetails, setProductDetails] = useState({
-        articleNumber: '',
-        sizes: [],
-        color: '',
-        quantity: '',
-        buyingPrice: '',
-        sellingPrice: '',
-        image: null,
-    });
+    const [productDetails, setProductDetails] = useState({ sizes: [], category: [], subCategory: "" });
 
-    // Handle form field change
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch("https://localhost:44336/api/product/GetCategory", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setCategories(data.Data);
+                } else {
+                    console.error("Failed to fetch categories:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error during GetCategory:", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProductDetails({
@@ -29,6 +46,21 @@ const AddProduct = () => {
         });
     };
 
+    const handleCategoryChange = (event) => {
+        setProductDetails({
+            ...productDetails,
+            category: event.target.value,
+            subCategory: "", // Reset subcategory when category is changed
+        });
+    };
+
+    const handleSubCategoryChange = (event) => {
+        setProductDetails({
+            ...productDetails,
+            subCategory: event.target.value,
+        });
+    };
+
     // Handle file input change
     const handleFileChange = (e) => {
         setProductDetails({
@@ -40,9 +72,12 @@ const AddProduct = () => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        // You can perform further actions like sending the data to the server here
         console.log(productDetails);
     };
+
+    const selectedCategory = categories.find(
+        (category) => category.PkCategoryId === productDetails.category
+    );
 
     return (
         <Box display="flex" height="100vh">
@@ -65,7 +100,7 @@ const AddProduct = () => {
             <Box flex={1} padding={3}>
                 <Grid container spacing={3}>
                     {/* Add Product Form */}
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12} md={12}>
                         <Card>
                             <CardContent>
                                 <Typography variant="h4" marginBottom={3} fontWeight="bold">
@@ -73,7 +108,53 @@ const AddProduct = () => {
                                 </Typography>
                                 <form onSubmit={handleSubmit}>
                                     <Grid container spacing={3}>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={4}>
+                                            <TextField
+                                                label="Product Name"
+                                                fullWidth
+                                                required
+                                                name="productName"
+                                                value={productDetails.productName}
+                                                onChange={handleChange}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={2}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>Product Category</InputLabel>
+                                                <Select
+                                                    value={productDetails.category}
+                                                    onChange={handleCategoryChange}
+                                                    name="category"
+                                                    label="Categories"
+                                                >
+                                                    {categories.map((category) => (
+                                                        <MenuItem key={category.PkCategoryId} value={category.PkCategoryId}>
+                                                            {category.CategoryName}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} md={2}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>Subcategory</InputLabel>
+                                                <Select
+                                                    value={productDetails.subCategory}
+                                                    onChange={handleSubCategoryChange}
+                                                    name="subCategory"
+                                                    label="Subcategory"
+                                                    disabled={!selectedCategory} // Disable subcategory dropdown if no category is selected
+                                                >
+                                                    {selectedCategory &&
+                                                        selectedCategory.SubCategories.map((subCategory) => (
+                                                            <MenuItem key={subCategory.PkCategoryId} value={subCategory.PkCategoryId}>
+                                                                {subCategory.CategoryName}
+                                                            </MenuItem>
+                                                        ))}
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
                                             <TextField
                                                 label="Article Number"
                                                 fullWidth
@@ -83,7 +164,17 @@ const AddProduct = () => {
                                                 onChange={handleChange}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={12}>
+                                            <TextareaAutosize
+                                                minRows={4}
+                                                placeholder="Product Detail"
+                                                name="productDetail"
+                                                value={productDetails.productDetail}
+                                                onChange={handleChange}
+                                                style={{ width: "98%", padding: "10px", fontSize: "16px", borderRadius: "5px", border: "1px solid #ccc" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
                                             <FormControl fullWidth>
                                                 <InputLabel>Sizes</InputLabel>
                                                 <Select
@@ -101,17 +192,25 @@ const AddProduct = () => {
                                                 </Select>
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={12} md={6}>
-                                            <TextField
-                                                label="Color"
-                                                fullWidth
-                                                required
-                                                name="color"
-                                                value={productDetails.color}
-                                                onChange={handleChange}
-                                            />
+                                        <Grid item xs={12} md={4}>
+                                            <FormControl fullWidth>
+                                                <InputLabel>Product Color</InputLabel>
+                                                <Select
+                                                    multiple
+                                                    value={productDetails.sizes}
+                                                    onChange={handleSizeChange}
+                                                    name="sizes"
+                                                    label="Sizes"
+                                                >
+                                                    {["Brown", "Black", "Mustard", "White", "Blue", "Grey", "Olive", "Camel", "Chico"].map((color) => (
+                                                        <MenuItem key={color} value={color}>
+                                                            {color}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
                                         </Grid>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={4}>
                                             <TextField
                                                 label="Quantity"
                                                 type="number"
@@ -122,7 +221,7 @@ const AddProduct = () => {
                                                 onChange={handleChange}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={4}>
                                             <TextField
                                                 label="Buying Price"
                                                 type="number"
@@ -133,7 +232,7 @@ const AddProduct = () => {
                                                 onChange={handleChange}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={4}>
                                             <TextField
                                                 label="Selling Price"
                                                 type="number"
@@ -144,7 +243,8 @@ const AddProduct = () => {
                                                 onChange={handleChange}
                                             />
                                         </Grid>
-                                        <Grid item xs={12} md={6}>
+                                        <Grid item xs={12} md={4}>
+                                            <label>Product Image</label>
                                             <Input
                                                 type="file"
                                                 accept="image/*"
