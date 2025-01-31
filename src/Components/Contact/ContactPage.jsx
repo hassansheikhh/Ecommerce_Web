@@ -34,22 +34,22 @@ const ContactPage = () => {
         <div className="contactInfo">
           <div className="contactAddress">
             <div className="address">
-              <h3>Store in London</h3>
+              <h3>Factory in Karachi</h3>
               <p>
-                1418 River Drive, Suite 35 Cottonhall, CA 9622
-                <br /> United Kingdom
+                House No 554, Sector 33/C, Korangi 2/12
+                <br /> Karachi
               </p>
               <p>
                 admin@dummymail.com
                 <br />
-                +44 20 7123 4567
+                +92 310 2382431
               </p>
             </div>
             <div className="address">
-              <h3>Store in India</h3>
+              <h3>Shop in Karachi</h3>
               <p>
-                A-791, A-791, Bandra Reclamation Rd, Mumbai
-                <br /> Maharashtra
+                Shop No - 00 , Aman Mall, Korangi Crossing
+                <br /> Karachi
               </p>
               <p>
                 contact@dummymail.com
